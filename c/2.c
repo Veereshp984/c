@@ -1,37 +1,39 @@
 // charater stuffing
+
+
 #include <stdio.h>
 #include <string.h>
-
 void character_stuffing(const char *input, char *output, char ch, int pos) {
     strcpy(output, "dlestx");
-    for (int i = 0, j = 6; input[i] != '\0'; i++) {
+    int j = 6;
+    for (int i = 0; input[i] != '\0'; i++) {
         if (i == pos - 1) {
-            strcat(output, "dle");
-            output[j + 3] = ch;
-            strcat(output + j + 4, "dle");
-            j += 7;
-        } else if (!strncmp(&input[i], "dle", 3)) {
-            strcat(output, "dle");
+            strcpy(&output[j], "dle");
+            j += 3;
+            output[j++] = ch;
+            strcpy(&output[j], "dle");
+            j += 3;
+        }
+        if (!strncmp(&input[i], "dle", 3)) {
+            strcpy(&output[j], "dle");
             j += 3;
         }
         output[j++] = input[i];
     }
+    output[j] = '\0';
     strcat(output, "dleetx");
 }
 
 int main() {
-    char input[20], output[50];
+    char input[50], output[200];
     int pos;
     char ch;
-
     printf("Enter string: ");
     scanf("%s", input);
     printf("Enter stuffing position and character: ");
     scanf("%d %c", &pos, &ch);
-
     character_stuffing(input, output, ch, pos);
     printf("Frame after stuffing: %s\n", output);
-
     return 0;
 }
 
